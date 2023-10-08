@@ -54,9 +54,6 @@ exec {'restart Nginx':
   before   => File['/data/']
 }
 
-file {'/data/':
-  ensure  => directory,
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
-  recurse => true,
+exec { 'run5':
+  command => '/usr/bin/chown -R ubuntu:ubuntu /data/',
 }
