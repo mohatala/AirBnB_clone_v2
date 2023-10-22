@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """Import Module"""
 from flask import Flask, render_template
+from models import storage
 
 app = Flask(__name__)
 
@@ -48,6 +49,28 @@ def number(n):
 def number_template(n):
     # start function
     return render_template("5-number.html", num=n)
+
+
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
+def number_odd_or_even(n):
+    # start function
+    s = "odd"
+    if n % 2 == 0:
+        s = "even"
+    return render_template("6-number_odd_or_even.html", num=n, res=s)
+
+
+@app.route('/states_list', strict_slashes=False)
+def states_list(n):
+    # start function
+    states = sorted(list(storage.all("State").values()), key=lambda x: x.name)
+    return render_template("7-states_list.html", state_list=states)
+
+
+@app.teardown_appcontext
+def teardown_db(exception):
+    """closes the storage on teardown"""
+    storage.close()
 
 
 if __name__ == '__main__':

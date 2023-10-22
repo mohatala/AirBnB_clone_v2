@@ -50,6 +50,15 @@ def number_template(n):
     return render_template("5-number.html", num=n)
 
 
+@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
+def number_odd_or_even(n):
+    # start function
+    s = "odd"
+    if n % 2 == 0:
+        s = "even"
+    return render_template("6-number_odd_or_even.html", num=n, res=s)
+
+
 if __name__ == '__main__':
     # run() method of Flask class runs the application
     # on the local development server.
